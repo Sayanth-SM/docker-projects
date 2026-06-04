@@ -1,6 +1,6 @@
 ## PROJECT TITLE.
 
-~Dockerized Nginx Static Website~
+Dockerized Nginx Static Website
 
 ## Project Description.
 
@@ -9,18 +9,18 @@ The goal is to understand Docker concepts like Dockerfile, Docker image, and con
 
 ## Tools used.
 
-nginx
-html
-dockerfile
-dockerimage
-container
+nginx.
+html.
+dockerfile.
+dockerimage.
+container.
 
 ## File structure.
 
 dockerized-website/
-    -index.html
-    -dockerfile
-    -README.md
+    index.html
+    dockerfile
+    README.md
 
 ## Dockerfile instructions used.
 
