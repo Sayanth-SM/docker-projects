@@ -28,7 +28,7 @@ The Dockerfile uses:
 * Dockerfile
 * Docker Image
 * Docker Container
-* AWS EC2 *(for optional cloud deployment)*
+* AWS EC2
 
 ## Project Structure
 
@@ -36,7 +36,10 @@ The Dockerfile uses:
 dockerized-website/
 ├── Dockerfile
 ├── index.html
-└── README.md
+├── README.md
+└── screenshots/
+    ├── container.png
+    └── website.png
 ```
 
 ## Dockerfile
@@ -46,7 +49,9 @@ The Dockerfile uses the official Nginx image:
 ```dockerfile
 FROM nginx:latest
 
-COPY index.html /usr/share/nginx/html/index.html
+COPY index.html /usr/share/nginx/html
+
+EXPOSE 80
 ```
 
 ### Dockerfile Instructions Used
@@ -62,28 +67,31 @@ In this project, the official Nginx image is used as the base image.
 Copies the local `index.html` file into the default Nginx web directory inside the container.
 
 ```text
-/usr/share/nginx/html/
+/usr/share/nginx/html
 ```
+#### `EXPOSE`
+
+EXPOSE `80` documents that the container is intended to listen on port 80
 
 ## Build the Docker Image
 
 Run the following command from the project directory:
 
 ```bash
-docker build -t dockerized-website .
+docker build -t nginx-website:01 .
 ```
 
 ### Explanation
 
 * `docker build` — Builds a Docker image.
 * `-t` — Assigns a name and optional tag to the image.
-* `dockerized-website` — The name of the image.
+* `nginx-website:01` — The name of the image.
 * `.` — Uses the current directory as the build context.
 
 ## Run the Docker Container
 
 ```bash
-docker run -d -p 80:80 --name dockerized-website-container dockerized-website
+docker run -d -p 80:80 nginx-website:01
 ```
 
 ### Explanation
@@ -103,13 +111,6 @@ Host Port:Container Port
 
 This allows traffic received on port `80` of the host machine to reach port `80` inside the Docker container.
 
-#### `--name`
-
-Assigns a custom name to the container.
-
-```text
-dockerized-website-container
-```
 
 ## Access the Website
 
@@ -131,6 +132,12 @@ If the Docker container is running on an EC2 instance, access the website using:
 
 ```text
 http://<EC2-PUBLIC-IP>
+```
+
+You can also use:
+
+```text
+http://<EC2-PUBLIC-IP>:80
 ```
 
 ### EC2 Security Group Configuration
@@ -179,7 +186,7 @@ docker ps
 `WORKDIR` is not required because the website file is copied directly into Nginx's default web root directory:
 
 ```text
-/usr/share/nginx/html/
+/usr/share/nginx/html
 ```
 
 ## Architecture
